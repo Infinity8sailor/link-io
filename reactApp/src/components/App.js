@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
+import './app.css';
 
 class App extends Component {
   constructor(props) {
@@ -33,6 +34,8 @@ class App extends Component {
 
   render() {
     return (
+      <div>
+        <h1>from javascript</h1>
       <ul>
         {this.state.data.map(contact => {
           return (
@@ -42,6 +45,7 @@ class App extends Component {
           );
         })}
       </ul>
+      </div>
     );
   }
 }

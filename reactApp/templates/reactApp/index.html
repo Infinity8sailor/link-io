@@ -1,15 +1,20 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel ="stylesheet" href="{% static "reactApp/hello.css" %}">
   <title>Django REST with React</title>
 </head>
 <body>
+  <div id = "hello">hello threre!</div>
+  <div id = "root1">from root1!</div>
 <div id="root">
+  hello threre!
     <!-- React will load here -->
 </div>
 </body>
-{% load static %}
 <script src="{% static "reactApp/main.js" %}"></script>
+<script src="{% static "reactApp/App.js" %}"></script>
 </html>
