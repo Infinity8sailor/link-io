@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'leads.apps.LeadsConfig', # activate the new app
     'rest_framework',
-    'reactApp'
+    'reactApp.apps.ReactappConfig'
 ]
 
 MIDDLEWARE = [
