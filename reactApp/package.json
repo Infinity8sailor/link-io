@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode production ./src/index.js --output ./static/reactApp/main.js",
-    "build": "webpack --mode production ./src/index2.js --output ./static/reactApp/App.js"
+    "dev": "webpack --mode development ./src/index.js --output ./static/reactApp/main.js",
+    "build": "webpack --mode production ./src/index.js --output ./static/reactApp/main.js"
   },
   "keywords": [],
   "presets": [
