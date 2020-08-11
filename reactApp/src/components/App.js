@@ -33,6 +33,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.data);
     return (
       <div>
         <h1>from javascript</h1>
@@ -40,7 +41,7 @@ class App extends Component {
         {this.state.data.map(contact => {
           return (
             <li key={contact.id}>
-              {contact.name} - {contact.email}
+              {contact.name} - {contact.email} - {contact.created_at}
             </li>
           );
         })}

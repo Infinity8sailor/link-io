@@ -16,6 +16,13 @@ class App extends Component{
 
   componentDidMount(){
     Promise.all([
+      // fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      // fetch(`${process.env.PUBLIC_URL}/world.json`),
+      // fetch(`${process.env.PUBLIC_URL}/plane.json`),
+      // fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      // fetch(`${process.env.PUBLIC_URL}/world.json`),
+      // fetch(`${process.env.PUBLIC_URL}/plane.json`),
+      // fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
       fetch(`public/flare-2.json`),
       fetch(`public/world.json`),
       fetch(`public/plane.json`),
@@ -45,20 +52,22 @@ class App extends Component{
     // z holds a copy of the previous transform, so we can track its changes
     let z = d3.zoomIdentity;
      // set up the ancillary zooms and an accessor for their transforms
-    const zoomX = d3.zoom().scaleExtent([1, 10]);
+    const zoomX = d3.zoom().scaleExtent([0,100 ]);
     const svG = d3.select(this.refs.svG);
     const gx = d3.select(this.refs.x_Axis);
     const gtree = d3.select(this.refs.Timetree);
     const tx = () => d3.zoomTransform(gx.node());
-    const xScale = d3.scaleLinear().domain(d3.extent([-70,-60,200,0,50,100])).range([0,width-margin.left]).nice();
-    const xAxis = (g, scale) => g.call(d3.axisBottom(scale).ticks(12));
+    const xScale =d3.scaleTime().domain([new Date(2000, 0, 1, 0), new Date(2001, 0, 1, 2)]).range([0,width-margin.left]).nice();
+    const xAxis = (g, scale) => g.call(d3.axisBottom(scale).ticks(12).tickSizeOuter(0));
     const line = d3.select(this.refs.svG).append("line")
                       .attr("y1", 0)
                       .attr("y2", height)
                       .attr("stroke", "rgba(255,0,0,1)")
                       .style("pointer-events","none");
 
-    const zoom = d3.zoom().on("zoom", function() {
+    const zoom = d3.zoom()
+        .scaleExtent([1,100 ])
+        .on("zoom", function() {
           const e = d3.event;
           const t = e.transform;
           const k = t.k / z.k;
