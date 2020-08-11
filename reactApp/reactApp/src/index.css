@@ -1,0 +1,66 @@
+svg {
+	background: rgba(255,255,255,.5);
+  height: 650px;
+  width:80vw;
+  display: inline;
+}
+h1 {
+  background: yellow;
+  text-align: center;
+}
+body {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+path {
+  fill: none;
+  stroke: blue;
+  size: 3px;
+}
+
+text {
+  text-shadow:
+   -1px -1px 3px white,
+   -1px  1px 3px white,
+    1px -1px 3px white,
+    1px  1px 3px white;
+  pointer-events: none;
+  font-family: 'Playfair Display', serif;
+}
+
+.row {
+  height: 100vh;
+  width: 100vw;
+  background-color: pink;
+}
+.btn-group {
+  height: 650px;
+  width: 10vw;
+  overflow-y: scroll;
+  display: inline-block;
+}
+.btn-group button {
+  background-color: purple; /* Green background */
+  border: 3px solid skyblue; /* Green border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  width: 100%; /* Set a width if needed */
+  display: block; /* Make the buttons appear below each other */
+}
+
+.btn-group button:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: skyblue;
+  border: 3px solid purple; /* Green border */
+}
