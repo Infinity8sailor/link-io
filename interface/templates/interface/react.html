@@ -1,0 +1,88 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- googlematerial font CSS -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+		rel="stylesheet">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">		
+		<!-- style.CSS -->
+		<link rel ="stylesheet" href="{% static "interface/css/style.css" %}">
+		<!-- <link rel ="stylesheet" href="{% static "interface/css/timer.css" %}"> -->
+		
+		
+		<title>Root_reactApp</title>
+	</head>
+	<body>
+		<!-- <div class="outer-wrapper"> -->
+			<!-- <div class="wrapper scroll"> -->
+				<nav class="navbar  navbar-expand-sm fixed-top  bg-dark">
+					<span class="logo-image">
+						<img src="{% static data.icon %}" class="img-fluid">
+					</span>
+					<div class="navbar-brand ml-2 " href="{% url "home" %}">
+						{{data.user}}
+					</div>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					
+					<div class="collapse navbar-collapse my-2 " id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto ">
+							<div class="dropdown " ref="#">
+								<button class="btn btn-outline-success my-2 my-sm-0"><a href="#slide1" class="btn-outline-success">Projects</a></button>
+								<div class="dropdown-content">
+									<b href="#">project</b>
+									{% for project,details in data.projects.items %}
+									<b href="#">{{project}}</b>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="dropdown">
+								<button class="btn btn-outline-success my-2 my-sm-0" >Tasks</button>
+								<div class="dropdown-content">
+									{% for term in data.terms %}
+									<b href="#">{{term}}</b>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="dropdown">
+								<button class="btn btn-outline-success my-2 my-sm-0"><a href="reactapp/" class="btn-outline-success">TimeLine</a></button>
+								<div class="dropdown-content">
+									<b href="#">Link 1</b>
+									<b href="#">Link 2</b>
+									<b href="#">Link 3</b>
+								</div>
+							</div>
+							<div class="dropdown">
+								<button  class="btn btn-outline-success my-2 my-sm-0" >Time</button>
+								<div class="dropdown-content" aria-labelledby="navbarDropdown">
+									<b  href="#">calendar</b>
+									<b  href="#">stopwatch</b>
+									<b  href="#">timer</b>
+									<b  href="#">alarm</b>
+									<b  href="#">reminder</b>
+									<b  href="#">calculator</b>
+								</div>
+							</div>
+							<div class="dropdown">
+								<button  class="btn btn-outline-success my-2 my-sm-0"><a href="/g_docs" class="btn-outline-success">Google_Docs</a></button>
+							</div>
+						</ul>
+						<form class="form-inline my-1 my-lg-0">
+							<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">re-Search</button>
+						</form>
+					</div>
+                </nav>
+                <div id ="root"></div>
+    </body>
+    <script src="{% static "reactApp/main.js" %}"></script>
+</html>

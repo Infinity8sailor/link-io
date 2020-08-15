@@ -1,0 +1,167 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- googlematerial font CSS -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+		rel="stylesheet">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">		
+		<!-- style.CSS -->
+		<link rel ="stylesheet" href="{% static "interface/css/style.css" %}">
+		<link rel ="stylesheet" href="{% static "interface/css/timer.css" %}">
+		
+		<!-- Latest compiled and minified CSS 
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
+		-->
+		
+		<title>Google_Docs</title>
+	</head>
+	<body>
+		<div class="outer-wrapper">
+			<div class="wrapper">
+				<nav class="navbar  navbar-expand-sm fixed-top  bg-dark">
+					<span class="logo-image">
+						<img src="{% static data.icon %}" class="img-fluid">
+					</span>
+					<div class="navbar-brand ml-2 " href="{% url "home" %}">
+						{{data.user}}
+					</div>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					
+					<div class="collapse navbar-collapse my-2 " id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto ">
+							<div class="dropdown " ref="#">
+								<button class="btn btn-outline-success my-2 my-sm-0"><a href="#slide1" class="btn-outline-success">Projects</a></button>
+								<div class="dropdown-content">
+									<b href="#">project</b>
+									{% for project,details in data.projects.items %}
+									<b href="#">{{project}}</b>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="dropdown">
+								<button class="btn btn-outline-success my-2 my-sm-0" >Tasks</button>
+								<div class="dropdown-content">
+									{% for term in data.terms %}
+									<b href="#">{{term}}</b>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="dropdown">
+								<button class="btn btn-outline-success my-2 my-sm-0"><a href="#slide2" class="btn-outline-success">TimeLine</a></button>
+								<div class="dropdown-content">
+									<b href="#">Link 1</b>
+									<b href="#">Link 2</b>
+									<b href="#">Link 3</b>
+								</div>
+							</div>
+							<div class="dropdown">
+								<button  class="btn btn-outline-success my-2 my-sm-0" >Time</button>
+								<div class="dropdown-content" aria-labelledby="navbarDropdown">
+									<b  href="#">calendar</b>
+									<b  href="#">stopwatch</b>
+									<b  href="#">timer</b>
+									<b  href="#">alarm</b>
+									<b  href="#">reminder</b>
+									<b  href="#">calculator</b>
+								</div>
+							</div>
+							<div class="dropdown">
+								<button  class="btn btn-outline-success my-2 my-sm-0"><a href="#slide3" class="btn-outline-success">Google_Docs</a></button>
+							</div>
+						</ul>
+						<form class="form-inline my-1 my-lg-0">
+							<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">re-Search</button>
+						</form>
+					</div>
+				</nav>
+<div id="slide3" class="slide" style="background: rgb(54, 159, 190);">
+    <div class="content p-0 m-0" >
+            <div class="container-fluid p-0 m-0"  >
+                <div class="row m-0">
+                    <div class="col-lg-6 col-xl-6 d-flex m-0 p-0">	
+                        <nav class="navbar  navbar-expand-sm navbar-dark flex-fill bg-dark " >
+                            <div class="dropdown">
+                                <button class="btn btn-outline-success my-2 my-sm-0"><span><img src="{% static "interface/images/googleDrive.png" %}" alt="google drive" style="width: 120px;height: 25px;border-radius: 10%;overflow: hidden;"></span></button>
+                                <div id="drive_files" class="dropdown-content scroll" >
+                                    <b id="drive_files1" onclick="execute()" style="color:red">Creat New File</b>
+                                </div>
+                            </div>
+                            <!--Add buttons to initiate auth sequence and sign out-->
+                            <button id="authorize_button" style="display: none;float: right;">Authorize</button>
+                            <button id="signout_button" style="display: none;float: right;">Sign Out</button>
+                        </nav>
+                    </div>
+                    <div class="col-lg-6 col-xl-6 d-flex m-0 p-0">	
+                        <nav class="navbar  navbar-expand-sm navbar-dark flex-fill bg-dark">
+                            <form class="form-inline my-0 my-lg-0 float-right">
+                                <input id="search_web" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                <a class="btn btn-outline-success my-1 my-sm-0 text-green"  onclick="searchWeb()">re-Search document</a>
+                            </form>
+                            <div id="app"></div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-lg-6 col-xl-6 d-flex m-0 p-0" style="height: 90vh;width: 50vw;">
+                        <iframe id="google_docs_frame" class="flex-fill"
+                        src="https://drive.google.com/open?id=1cLP67TaxnbsIAtxjQaK3llE6aSLRezJCLA5wXsudTXQ"  frameborder="0"></iframe>
+                    </div>
+                    <div class="col-lg-6 col-xl-6 d-flex m-0 p-0" style="height: 90vh;width: 50vw;">
+                        <!--
+                            src="http://www.google.com"  
+                        -->
+                        <iframe id="search_view_a" class="flex-fill"   	
+                        src="http://relativitet.se/Webarticles/2006AJP-Jonsson74p905.pdf" frameborder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+	
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>			
+<!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+
+<script type="text/javascript" src="{% static "interface/js/javascript.js" %}"></script>
+<script type="text/javascript" src="{% static "interface/js/GoogleApi.js" %}"></script>
+<script type="text/javascript" src="{% static "interface/js/timer.js" %}"></script>
+
+<script async defer src="https://apis.google.com/js/api.js"
+  onload="this.onload=function(){};handleClientLoad()"
+  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('id01');
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+
+</html>

@@ -1,8 +1,15 @@
 svg {
-	background: rgba(255,255,255,.5);
+  z-index: -1;
+	background: rgba(255,255,255,1);
   height: 650px;
   width:80vw;
   display: inline;
+}
+#gx2, #gx1 {
+  z-index: 2;
+  font-size: medium;
+ pointer-events: none;
+ font-family: 'Playfair Display', serif;
 }
 h1 {
   background: yellow;
@@ -20,11 +27,11 @@ body {
 
 path {
   fill: none;
-  stroke: blue;
+  stroke: red ;
   size: 3px;
 }
 
-text {
+/* text {
   text-shadow:
    -1px -1px 3px white,
    -1px  1px 3px white,
@@ -32,14 +39,15 @@ text {
     1px  1px 3px white;
   pointer-events: none;
   font-family: 'Playfair Display', serif;
-}
+} */
 
 .row {
   height: 100vh;
   width: 100vw;
-  background-color: pink;
+  background-color: red;
 }
 .btn-group {
+  /* padding : 50px 0px 0px 0px ;  */
   height: 650px;
   width: 10vw;
   overflow-y: scroll;

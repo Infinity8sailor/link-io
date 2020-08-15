@@ -1,0 +1,454 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- googlematerial font CSS -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+		rel="stylesheet">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">		
+		<!-- style.CSS -->
+		<link rel ="stylesheet" href="{% static "interface/css/style.css" %}">
+		<!-- <link rel ="stylesheet" href="{% static "interface/css/timer.css" %}"> -->
+		
+		
+		<title>Root1...</title>
+	</head>
+	<body>
+		<!-- <div class="outer-wrapper"> -->
+			<!-- <div class="wrapper scroll"> -->
+				<nav class="navbar  navbar-expand-sm fixed-top  bg-dark">
+					<span class="logo-image">
+						<img src="{% static data.icon %}" class="img-fluid">
+					</span>
+					<div class="navbar-brand ml-2 " href="{% url "home" %}">
+						{{data.user}}
+					</div>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					
+					<div class="collapse navbar-collapse my-2 " id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto ">
+							<div class="dropdown " ref="#">
+								<button class="btn btn-outline-success my-2 my-sm-0"><a href="#slide1" class="btn-outline-success">Projects</a></button>
+								<div class="dropdown-content">
+									<b href="#">project</b>
+									{% for project,details in data.projects.items %}
+									<b href="#">{{project}}</b>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="dropdown">
+								<button class="btn btn-outline-success my-2 my-sm-0" >Tasks</button>
+								<div class="dropdown-content">
+									{% for term in data.terms %}
+									<b href="#">{{term}}</b>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="dropdown">
+								<button class="btn btn-outline-success my-2 my-sm-0"><a href="react/" class="btn-outline-success">TimeLine</a></button>
+								<div class="dropdown-content">
+									<b href="#">Link 1</b>
+									<b href="#">Link 2</b>
+									<b href="#">Link 3</b>
+								</div>
+							</div>
+							<div class="dropdown">
+								<button  class="btn btn-outline-success my-2 my-sm-0" >Time</button>
+								<div class="dropdown-content" aria-labelledby="navbarDropdown">
+									<b  href="#">calendar</b>
+									<b  href="#">stopwatch</b>
+									<b  href="#">timer</b>
+									<b  href="#">alarm</b>
+									<b  href="#">reminder</b>
+									<b  href="#">calculator</b>
+								</div>
+							</div>
+							<div class="dropdown">
+								<button  class="btn btn-outline-success my-2 my-sm-0"><a href="/g_docs" class="btn-outline-success">Google_Docs</a></button>
+							</div>
+						</ul>
+						<form class="form-inline my-1 my-lg-0">
+							<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">re-Search</button>
+						</form>
+					</div>
+				</nav>
+				<div id="slide1" class="slide" style="background: rgb(28, 163, 194);">
+					<div class="content p-0 m-0" >
+						<div class="container-fluid p-0 m-0" >
+							<div class="row m-0 ">
+								<div class="col-lg-6 col-xl-6 d-flex  p-1 m-0">
+									<div id="stat" class="card flex-fill  bg-dark m-0 ">
+										<div class="card-header text-white bg-dark m-0 p-0" >
+												<div class="btn-group float-right pr-3" role="group" aria-label="Basic example">
+													<button type="button" class="btn btn-sm btn-primary" id="accountsData">work</button>
+													<button type="button" class="btn btn-sm btn-primary" id="purchasesData">live</button>
+													<button type="button" class="btn btn-sm btn-primary" id="sessionsData">projected</button>
+												</div>
+											<h5 class="header-title text-white">Weekstat</h5>
+									</div>
+										<div class="chart-container scroll-x" >
+											<canvas id="myChartline" height="100vh"  ></canvas> 
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3 col-xl-3 d-flex p-1 m-0">
+									<div id="tasks" class="card  bg-dark flex-fill  m-0  ">
+										<div class="card-header text-white bg-dark ">
+											<button class="material-icons" style="float:right;" data-toggle="modal" data-target="#TaskModal"> add_box</button>
+											<h5 class="header-title text-white">Tasks</h5>
+										</div>
+										<!-- Button trigger modal -->
+										
+										<!-- Modal -->
+										<div class="modal fade" id="TaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header bg-success">
+														<h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body bg-dark">
+														<form class="modal-content bg-info" method="post">
+															{% csrf_token %}
+															<div class="container">
+																<label for="task_name" style="display: block;"><b>Name Task</b></label>
+																<input type="text" placeholder="Enter name" name="task_name" required>
+																
+																<label for="task_completion" style="display: block;"><b>Completion</b></label>
+																<input type="text" placeholder="Enter starting...." name="task_completion" required>
+
+																<label for="task_deadline" style="display: block;"><b>time limit</b></label>
+																<input type="text" placeholder="Enter Ending....." name="task_deadline" required>
+																
+																<div class="modal-footer bg-dark">
+																	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+																	<button type="submit" class="btn btn-primary">Add Task</button>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="card-body flex-fill  m-0 p-0">
+											<ul class="list-group scroll flex-fill m-0 p-0">
+												{% for task,details in data.tasks.items %}
+												<div class="list-group-item bg-dark text-white  ">{{task}}  < {{details.1}} >
+													<div class="progress " style="float: right; width: 125px;">
+														<div class="progress-bar " style="width:{{details.0}}%">{{details.0}}%</div>
+													</div>
+												</div>
+												{% endfor %}
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3 col-xl-3 d-flex p-1 m-0 ">
+									<div id="io" class="card flex-fill bg-dark m-0">
+										<div class="card-header text-white bg-dark m-0 p-0" >
+											<span style="float:right;">
+												<div class="btn-group float-right pr-3" role="group" aria-label="Basic example">
+													<button type="button" class="btn btn-sm btn-primary" id="accountsData">work	</button>
+													<button type="button" class="btn btn-sm btn-primary" id="purchasesData">live</button>
+													<button type="button" class="btn btn-sm btn-primary" id="sessionsData">projected</button>
+												</div>
+											</span>
+											<h5 class="header-title text-white m-0">__i/o__ </h5>
+										</div>
+										<div class="card-body flex-fill bg-dark text-white m-0 p-0" >
+											<div class="graph-container">
+												<canvas id="myChartDoughnut" height="270px" ></canvas> 
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row m-0">
+								<div class="col-lg-6 col-xl-6 d-flex p-1 m-0">
+									<div class="card flex-fill text-white bg-dark ">
+										<div class="card-header text-white bg-dark m-0 p-0" >
+											<span style="float:right;">
+												<div class="btn-group float-right pr-3" role="group" aria-label="Basic example">
+													<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">ADD</button>
+													<button type="button" class="btn btn-sm btn-primary" id="purchasesData">live</button>
+													<button type="button" class="btn btn-sm btn-primary" id="sessionsData">therotical</button>
+													<button type="button" class="btn btn-sm btn-primary" id="sessionsData">optimized</button>
+													<button type="button" class="btn btn-sm btn-primary" id="sessionsData">open-source</button>
+												</div>
+											</span>
+											<h5>Projects</h5>
+										</div>
+										<!-- Button trigger modal -->
+										
+										<!-- Modal -->
+										<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header bg-success">
+														<h5 class="modal-title" id="exampleModalLabel">Add hackthones Or challenges</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body bg-dark">
+														<form class="modal-content bg-info" a>
+															<div class="container">
+																<label for="hackthone" style="display: block;"><b>Name hackthone</b></label>
+																<input type="text" placeholder="Enter name" name="email" required>
+																
+																<label for="Start" style="display: block;"><b>start date</b></label>
+																<input type="password" placeholder="Enter starting...." name="psw" required>
+
+																<label for="End" style="display: block;"><b>end date</b></label>
+																<input type="password" placeholder="Enter Ending....." name="psw-repeat" required>
+																
+																<label for="link" style="display: block;"><b>link of homepage</b></label>
+																<input type="text" placeholder="Enter link" name="email" required>
+																
+																<label>
+																	<input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Registered for this
+																</label>
+															</div>
+														</form>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+														<button type="button" class="btn btn-primary">Add</button>
+													</div>
+												</div>
+											</div>
+										</div>
+											<div class="card-body scroll p-0">
+												<table class="table text-white bg-dark ">
+													<thead>
+														<tr>
+															<th>Projects</th>
+															<th class="text-right">percentage</th>
+															<th class="d-none d-xl-table-cell w-75">status</th>
+														</tr>
+												</thead>
+												<tbody>
+													{% for project,details in data.projects.items %}
+													<tr>
+														<td>{{project}} </td>
+														<td class="text-right">{{details.0}} </td>
+														<td class="d-none d-xl-table-cell">
+															<table class="table">
+																<tbody>
+																	<tr>
+																		<div class="progress m-1" style="height: 14px;">
+																			<div class="progress-bar bg-info" role="progressbar" style="width:{{details.0}}%;" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100">{{ details.0}}</div>
+																		</div>
+																	</tr>
+																	<tr>
+																		<div class="progress m-1" style="height: 14px;">
+																			<div class="progress-bar bg-success" role="progressbar" style="width:{{details.1}}%;" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100">{{ details.1}}</div>
+																		</div>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+													{% endfor %}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6 col-xl-6 d-flex p-1 m-0">
+									<div class="card bg-dark flex-fill">
+										<div class="card-header  bg-dark m-0 p-0">
+											<span style="float:right;">
+												<div class="btn-group float-right pr-3" role="group" aria-label="Basic example">
+													<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#hackthoneModal">ADD</button>
+													<button type="button" class="btn btn-sm btn-primary" id="accountsData">work	</button>
+													<button type="button" class="btn btn-sm btn-primary" id="purchasesData">live</button>
+													<button type="button" class="btn btn-sm btn-primary" id="sessionsData">projected</button>
+												</div>
+											</span>
+											<h5 class="card-title text-white mb-0">hackthone/challenges</h5>
+										</div>
+										<!-- Button trigger modal -->
+										
+										<!-- Modal -->
+										<div class="modal fade" id="hackthoneModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header bg-success">
+														<h5 class="modal-title" id="exampleModalLabel">Add hackthones Or challenges</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body bg-dark">
+														<form class="modal-content bg-info" method="post" >
+															{% csrf_token %}
+															<div class="container">
+																<label for="hackthone" style="display: block;"><b>Name hackthone</b></label>
+																<input type="text" placeholder="Enter name" name="hackthone_name" required>
+																
+																<label for="Start" style="display: block;"><b>start date</b></label>
+																<input type="text" placeholder="Enter starting...." name="hackthone_start" required>
+
+																<label for="End" style="display: block;"><b>end date</b></label>
+																<input type="text" placeholder="Enter Ending....." name="hackthone_end" required>
+																
+																<label for="link" style="display: block;"><b>link of homepage</b></label>
+																<input type="text" placeholder="link with http format" name="hackthone_link" required>
+																
+																<label for="reg" style="display: block;"><b>date of registration</b></label>
+																<input type="text" placeholder="Enter date of reg" name="hackthone_reg" required>
+																
+																<div class="modal-footer bg-dark">
+																	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+																	<button type="submit" class="btn btn-primary">Add</button>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+											<div class="card-body bg-dark scroll p-0">
+												<table id="datatables-dashboard-projects " class="table text-white scroll m-0">
+													<thead>
+														<tr>
+															<th>Name</th>
+															<th class="d-none d-xl-table-cell">Start Date</th>
+															<th class="d-none d-xl-table-cell">End Date</th>
+															<th>Status</th>
+															<th>link</th>
+															<th class="d-none d-md-table-cell">Last/Current Task</th>
+														</tr>
+													</thead>
+													<tbody>
+														{% for hackthone,details in data.hackthones.items %}
+														<tr>
+															<td>{{hackthone}}</td>
+															<td class="d-none d-xl-table-cell">{{details.0}}</td>
+														<td class="d-none d-xl-table-cell">{{details.1}}</td>
+														<td><span class="badge badge-success">online</span></td>
+														<td><span ><a href="{{details.2}}" target="_blank">{{details.2}} </a></span></td>
+														<td class="d-none d-md-table-cell">Awaited task to do</td>
+													</tr>
+													{% endfor %}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div id="slide2" class="slide" style="background: rgb(19, 75, 88);"> -->
+					<!-- <div class="card scroll" style="width: 300px;">
+						<div class="modal fade" id="topicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header bg-success">
+										<h5 class="modal-title" id="exampleModalLabel">Add topic/Sub_topic</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body bg-dark">
+										<form class="modal-content bg-info" method="post" >
+											{% csrf_token %}
+											<div class="container">
+												<label for="sel1">Projects</label>
+												<select class="form-control" id="sel1" name="project_name">
+													{% for project in data.projects %}
+													<option value="{{project}}">{{project}}</option>
+													{% endfor %}
+												</select>
+												<label for="sel2">topics</label>
+												<input type="text" placeholder="add new topic name" name="new_topic_name">
+												<select class="form-control" id="sel2" name="topic_name">
+													{% for project,details in data.projects.items %}
+													{% for topic in details.2%}
+													<option value="{{topic}}">{{project}}-{{topic}}</option>
+													{% endfor %}
+													{% endfor %}
+												</select>
+													
+												<label for="sub_topic" style="display: block;"><b>sub topic</b></label>
+												<input type="text" placeholder="Enter sub_topic....." name="sub_topic_name" >
+												
+												<div class="modal-footer bg-dark">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+													<button type="submit" class="btn btn-primary">Add</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<ul id="myUL">
+							{% for project,details in data.projects.items %}
+							<li>
+								<span class="caret">{{project}}
+								</span>
+								<ul class="nested">
+									{% for key, values in details.2.items %}
+									<li>
+										<span class="caret">{{key}}</span>
+										<ul class="nested">
+											{% for value in values %}
+											<li>{{value}}</li>
+											{% endfor %}
+										</ul>
+									</li>
+									{% endfor %}
+									<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#topicModal">ADD_new</button>
+								</ul>
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
+				-->
+			<!-- </div> -->
+				<!-- <div id="slide5" class="slide" style="background: rgb(32, 175, 201);"> -->
+					<!-- <iframe id = "gmaps" width="300" height="300" frameborder="0" 
+					src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC-afFMN7qoeNN0B-FjGrDCGITQRjBcpxg&q=india&maptype=satellite" allowfullscreen>
+				</iframe> -->
+					<!-- <div id="mydiv"> -->
+						<!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+						<!-- <div id="mydivheader"  class="material-icons" style="float:right;">open_with -->
+						<!-- </div> -->
+						<!-- 16:9 aspect ratio -->
+						<!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PL4iBqwJp5xLOLtt8a54YCks8OE1HtPCXN&vq=tiny" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+					<!-- </div> -->
+			<!-- </div> -->
+		<!-- </div> -->
+	</body>
+	
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>			
+	<!-- Optional JavaScript -->
+	  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+	
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+	
+	<script type="text/javascript" src="{% static "interface/js/javascript.js" %}"></script>
+
+	
+</html>

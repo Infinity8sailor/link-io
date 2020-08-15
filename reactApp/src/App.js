@@ -16,32 +16,53 @@ class App extends Component{
 
   componentDidMount(){
     Promise.all([
-      // fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
-      // fetch(`${process.env.PUBLIC_URL}/world.json`),
-      // fetch(`${process.env.PUBLIC_URL}/plane.json`),
-      // fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
-      // fetch(`${process.env.PUBLIC_URL}/world.json`),
-      // fetch(`${process.env.PUBLIC_URL}/plane.json`),
-      // fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
-      fetch(`public/flare-2.json`),
-      fetch(`public/world.json`),
-      fetch(`public/plane.json`),
-      fetch(`public/flare-2.json`),
-      fetch(`public/world.json`),
-      fetch(`public/plane.json`),
-      fetch(`public/flare-2.json`),
-      fetch(`public/world.json`),
-      fetch(`public/plane.json`),
-      fetch(`public/flare-2.json`),
-      fetch(`public/world.json`),
-      fetch(`public/plane.json`),
-      fetch(`public/flare-2.json`),
-      fetch(`public/world.json`),
-      fetch(`public/plane.json`),
-      fetch(`public/flare-2.json`),
-      fetch(`public/world.json`),
-      fetch(`public/plane.json`),
-      fetch(`public/plane.json`),
+      fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      fetch(`${process.env.PUBLIC_URL}/world.json`),
+      fetch(`${process.env.PUBLIC_URL}/plane.json`),
+      fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      fetch(`${process.env.PUBLIC_URL}/world.json`),
+      fetch(`${process.env.PUBLIC_URL}/plane.json`),
+      fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      fetch(`${process.env.PUBLIC_URL}/world.json`),
+      fetch(`${process.env.PUBLIC_URL}/plane.json`),
+      fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      fetch(`${process.env.PUBLIC_URL}/world.json`),
+      fetch(`${process.env.PUBLIC_URL}/plane.json`),
+      fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      fetch(`${process.env.PUBLIC_URL}/world.json`),
+      fetch(`${process.env.PUBLIC_URL}/plane.json`),
+      fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      fetch(`${process.env.PUBLIC_URL}/world.json`),
+      fetch(`${process.env.PUBLIC_URL}/plane.json`),
+      fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      fetch(`${process.env.PUBLIC_URL}/world.json`),
+      fetch(`${process.env.PUBLIC_URL}/plane.json`),
+      fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      fetch(`${process.env.PUBLIC_URL}/world.json`),
+      fetch(`${process.env.PUBLIC_URL}/plane.json`),
+      fetch(`${process.env.PUBLIC_URL}/flare-2.json`),
+      // fetch(`public/flare-2.json`),
+      // fetch(`public/world.json`),
+      // fetch(`public/plane.json`),
+      // fetch(`public/flare-2.json`),
+      // fetch(`public/world.json`),
+      // fetch(`public/plane.json`),
+      // fetch(`public/flare-2.json`),
+      // fetch(`public/world.json`),
+      // fetch(`public/plane.json`),
+      // fetch(`public/flare-2.json`),
+      // fetch(`public/world.json`),
+      // fetch(`public/plane.json`),
+      // fetch(`public/flare-2.json`),
+      // fetch(`public/world.json`),
+      // fetch(`public/plane.json`),
+      // fetch(`public/flare-2.json`),
+      // fetch(`public/world.json`),
+      // fetch(`public/plane.json`),
+      // fetch(`public/plane.json`),
     ]).then(responses => Promise.all(responses.map(resp => resp.json())))
     .then((map) => {
       //console.log("hello",flare, World, circle);
@@ -52,13 +73,18 @@ class App extends Component{
     // z holds a copy of the previous transform, so we can track its changes
     let z = d3.zoomIdentity;
      // set up the ancillary zooms and an accessor for their transforms
-    const zoomX = d3.zoom().scaleExtent([0,100 ]);
+    const zoomX = d3.zoom().scaleExtent([.5,100 ]);
     const svG = d3.select(this.refs.svG);
-    const gx = d3.select(this.refs.x_Axis);
+    const gx1 = d3.select(this.refs.x_Axis1);
+    const gx2 = d3.select(this.refs.x_Axis2)
+                  .attr("transform", `translate(0 625)`);
     const gtree = d3.select(this.refs.Timetree);
-    const tx = () => d3.zoomTransform(gx.node());
+    const tx = () => d3.zoomTransform(gx1.node());
     const xScale =d3.scaleTime().domain([new Date(2000, 0, 1, 0), new Date(2001, 0, 1, 2)]).range([0,width-margin.left]).nice();
     const xAxis = (g, scale) => g.call(d3.axisBottom(scale).ticks(12).tickSizeOuter(0));
+    const transition = d3.select(this.refs.svG)
+                         .transition()
+                         .duration(10000);
     const line = d3.select(this.refs.svG).append("line")
                       .attr("y1", 0)
                       .attr("y2", height)
@@ -66,7 +92,7 @@ class App extends Component{
                       .style("pointer-events","none");
 
     const zoom = d3.zoom()
-        .scaleExtent([1,100 ])
+        .scaleExtent([0.5,100 ])
         .on("zoom", function() {
           const e = d3.event;
           const t = e.transform;
@@ -75,10 +101,12 @@ class App extends Component{
 
           if (k === 1) {
             // pure translation?
-            gx.call(zoomX.translateBy, (t.x - z.x) / tx().k, 0);
+            gx1.call(zoomX.translateBy, (t.x - z.x) / tx().k, 0);
+            gx2.call(zoomX.translateBy, (t.x - z.x) / tx().k, 0);
           } else {
             // if not, we're zooming on a fixed point
-            gx.call(zoomX.scaleBy, k, point);
+            gx1.call(zoomX.scaleBy, k, point);
+            gx2.call(zoomX.scaleBy, k, point);
           }
           let [x,y] = d3.mouse(this);
           line.attr("transform", `translate(${x} 0)`)
@@ -87,9 +115,11 @@ class App extends Component{
           z = t;
           // redraw();
           const xr = tx().rescaleX(xScale);
-          gx.call(xAxis, xr);
+          gx1.call(xAxis, xr);
+          gx2.call(xAxis, xr);
           gtree.attr("transform",z);
     });
+
 
     d3.select(this.refs.svG)
           .call(zoom)
@@ -113,7 +143,7 @@ class App extends Component{
     return(
       <div className="App">
       <h1 >Hierarchy Structured Data</h1>
-      <App1/>
+      {/* <App1/> */}
       <div class = "row">
       <div id = "mapsButton" class="btn-group scroll">
       {this.state.maps.map((d,i) => (
@@ -121,9 +151,10 @@ class App extends Component{
       ))}
       </div>
       <svg ref = "svG"  >
-          <g ref = "x_Axis"/> 
+          <g ref = "x_Axis1" id = "gx1"/> 
+          <g ref = "x_Axis2" id = "gx2"/> 
           <g ref = "y_Axis"/>
-          <g ref = "Timetree" >
+          <g ref = "Timetree" > */}
            <Timetree data={map}/>
           </g> 
       </svg>
