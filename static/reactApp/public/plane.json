@@ -1,0 +1,10 @@
+{
+	"name" : "circle",
+	"children" : [
+	{"name": "chord"},
+	{"name" : "radius"},
+	{"name": "tangent"},
+	{"name": "centre"},
+	{"name": "diameter"}
+	]
+}
