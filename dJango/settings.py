@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'reactApp.apps.ReactappConfig',
     'interface.apps.InterfaceConfig',
+    'Robotics'
 ]
 
 MIDDLEWARE = [

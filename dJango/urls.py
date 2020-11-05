@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('leads.urls')),
     path('reactapp/', include('reactApp.urls')),
     path(r'', include('interface.urls')),
+    path('robotics/', include('Robotics.urls')),
 ]
